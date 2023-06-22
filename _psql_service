@@ -1,20 +1,13 @@
-#compdef psqlf
+#compdef psql
 
 _psql_service() {
-  #echo "context\n$curcontext\n"
-  #local curcontext="$curcontext"
-  #typeset -A opt_args
-  #_complete_help
-
-  #_arguments 'service=:psql_custom_services'
-  _arguments -C \
-    '*:service=:_psql_custom_services'
+  _arguments '*:service:_psql_custom_services'
 }
 
 _psql_custom_services() {
   local -a psql_services
 
-  psql_services=($(sed -n 's/\[\(.*\)\]/\1/p' ~/.pg_service.conf))
+  psql_services=($(sed -n 's/\[\(.*\)\]/service=\1/p' ~/.pg_service.conf))
 
   _describe 'service' psql_services
 }
